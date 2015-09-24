@@ -26,17 +26,15 @@ func InitDB(config *models.MySQLConfig) (*sqlx.DB, error) {
 		return nil, errors.New("sql.Open failed")
 	}
 
-	// var schema = `CREATE TABLE person (
-	//            		first_name text,
-	//            		last_name text,
-	//      					gay bool
-	//  						);`
-	//
-	// db.MustExec(schema)
+	var tabelas []string
+	db.Select(&tabelas, "SHOW TABLES LIKE 'Person'")
 
-	// if __, err = db.Exec(models.schema); err != nil {
-	// 	return nil, errors.New("db.Exec failed create table")
-	// }
+	if len(tabelas) == 0 {
+		err := db.MustExec(models.GetSchema())
+		if err != nil {
+			return nil, errors.New("db.Exec failed create table")
+		}
+	}
 
 	return db, nil
 }
