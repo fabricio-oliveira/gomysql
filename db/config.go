@@ -1,7 +1,7 @@
 package models
 
-// MySQLConfig contens struct create connection database.
-type MySQLConfig struct {
+// DBConfig contens struct create connection database.
+type DBConfig struct {
 	User     string
 	Password string
 	Address  string
