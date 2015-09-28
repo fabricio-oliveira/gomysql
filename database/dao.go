@@ -5,6 +5,8 @@ import (
 	"fmt"
 
 	"github.com/fabricioque/gomysql/models"
+	//Drive
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -17,8 +19,8 @@ type DBConection struct {
 	db       *sqlx.DB
 }
 
-// InitT Inicialize DataBase Connection
-func (conection *DBConection) InitT() error {
+// Init Inicialize DataBase Connection
+func (conection *DBConection) Init() error {
 
 	configDB := fmt.Sprintf("%s:%s@tcp(%s)/%s",
 		conection.User,
@@ -26,12 +28,12 @@ func (conection *DBConection) InitT() error {
 		conection.Address,
 		conection.Schema,
 	)
+
 	var err error
 	conection.db, err = sqlx.Open("mysql", configDB)
 	if err != nil {
 		return errors.New("sql.Open failed")
 	}
-
 	return nil
 }
 
@@ -52,15 +54,18 @@ func (conection *DBConection) checkExistTable(schema string) (bool, error) {
 }
 
 // GetAll Person DataBase
-func (conection *DBConection) GetAll(m *[]models.Entity) error {
+func (conection *DBConection) GetAll() (*[]models.Person, error) {
 
 	if conection.db == nil {
-		return errors.New("DB.GetAll conection not open")
+		return nil, errors.New("DB.GetAll conection not open")
 	}
 
-	query := fmt.Sprintf("select * from %s", (*m)[0].GetNameDB())
-	if err := conection.db.Select(m, query); err != nil {
-		return errors.New("sql.Select failed")
+	m := []models.Person{}
+
+	query := fmt.Sprintf("select * from Person")
+	//query := fmt.Sprintf("select * from %s", m[0].GetNameDB())
+	if err := conection.db.Select(&m, query); err != nil {
+		return nil, errors.New("sql.Select failed")
 	}
-	return nil
+	return &m, nil
 }
