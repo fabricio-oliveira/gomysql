@@ -1,4 +1,4 @@
-package database
+package models
 
 // DBConfig contens struct create connection database.
 type DBConfig struct {

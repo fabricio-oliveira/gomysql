@@ -8,7 +8,7 @@ type Person struct {
 }
 
 // GetSchema schema create table databse
-func getSchema() string {
+func GetSchema() string {
 	return `CREATE TABLE person (
 										first_name text,
 										last_name text,

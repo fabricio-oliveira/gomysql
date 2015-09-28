@@ -52,14 +52,14 @@ func (conection *DBConection) checkExistTable(schema string) (bool, error) {
 }
 
 // GetAll Person DataBase
-func (conection *DBConection) GetAll(m []models.Entity) error {
+func (conection *DBConection) GetAll(m *[]models.Entity) error {
 
 	if conection.db == nil {
 		return errors.New("DB.GetAll conection not open")
 	}
 
-	query := fmt.Sprintf("select * from %s", m[0].GetNameDB())
-	if err := conection.db.Select(&m, query); err != nil {
+	query := fmt.Sprintf("select * from %s", (*m)[0].GetNameDB())
+	if err := conection.db.Select(m, query); err != nil {
 		return errors.New("sql.Select failed")
 	}
 	return nil
