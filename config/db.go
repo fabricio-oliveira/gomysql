@@ -1,8 +1,8 @@
 package config
 
-import "github.com/fabricioque/gomysql/database"
+import "github.com/fabricioque/gomysql/db"
 
 // GetDBConection Conf
-func GetDBConection() (config *database.DBConection) {
-	return &database.DBConection{User: "root", Address: "127.0.0.1:3306", Schema: "gomysql"}
+func GetDBConection() (config *db.DBConection) {
+	return &db.DBConection{User: "root", Address: "127.0.0.1:3306", Schema: "gomysql"}
 }

@@ -1,4 +1,4 @@
-package database
+package db
 
 import (
 	"errors"
@@ -63,7 +63,6 @@ func (conection *DBConection) GetAll() (*[]models.Person, error) {
 	m := []models.Person{}
 
 	query := fmt.Sprintf("select * from Person")
-	//query := fmt.Sprintf("select * from %s", m[0].GetNameDB())
 	if err := conection.db.Select(&m, query); err != nil {
 		return nil, errors.New("sql.Select failed")
 	}

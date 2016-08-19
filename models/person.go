@@ -4,7 +4,7 @@ package models
 type Person struct {
 	FirstName string `db:"first_name"`
 	LastName  string `db:"last_name"`
-	Gay       bool   `db:"gay"`
+	Sex       bool   `db:"sex"`
 }
 
 // GetSchema schema create table databse
@@ -12,7 +12,7 @@ func (p *Person) GetSchema() string {
 	return `CREATE TABLE person (
 										first_name text,
 										last_name text,
-										gay bool
+										sex bool
 							);`
 }
 
